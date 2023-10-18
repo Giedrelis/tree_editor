@@ -13,6 +13,7 @@ with open("tree_editor.js", "r") as f:
     tree_editor_script = f.read().format(tree_data=json.dumps(DECISION_TREE))
 
 
+
 st.components.v1.html(
     f"""
     <script>{d3_script}</script>
