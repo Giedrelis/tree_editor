@@ -1,5 +1,5 @@
 // Load the decision tree data from Streamlit
-let treeData = {{tree_data}};  // Streamlit will replace {{tree_data}} with actual data
+let treeData = {tree_data}; // Streamlit will replace {{tree_data}} with actual data
 
 const width = 1000;
 const height = 600;
