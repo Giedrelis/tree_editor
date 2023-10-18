@@ -1,9 +1,16 @@
 import streamlit as st
 import json
 
-# Load the decision tree data
-with open("decision_tree.json", "r") as file:
-    DECISION_TREE = json.load(file)
+# File uploader
+uploaded_file = st.file_uploader("Choose a JSON file", type="json")
+
+# Read the uploaded file
+if uploaded_file:
+    DECISION_TREE = json.load(uploaded_file)
+else:
+    st.warning("Please upload a JSON file.")
+    st.stop()
+
 
 # Embed the D3.js visualization
 with open("d3.min.js", "r") as f:
