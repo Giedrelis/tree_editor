@@ -50,18 +50,15 @@ def chat_with_tree():
     if "current_node" not in st.session_state:
         st.session_state.current_node = DECISION_TREE
         st.session_state.chat_history = []
+        st.session_state.chat_history.append({"name": "assistant", "text": DECISION_TREE["question"]})
+        if "comments" in DECISION_TREE:
+            st.session_state.chat_history.append({"name": "assistant", "text": DECISION_TREE["comments"]})
     current_node = st.session_state.current_node
 
     # Display the chat history
     for message in st.session_state.chat_history:
         with st.chat_message(name=message["name"]):
             st.write(message["text"])
-
-    # Display the current question
-    with st.chat_message(name="assistant"):
-        st.write(current_node["question"])
-        if "comments" in current_node:
-            st.write(current_node["comments"])
 
     # Display the available answers as buttons
     selected_option = None
@@ -86,7 +83,11 @@ def chat_with_tree():
                     # Add the action to the chat history
                     st.session_state.chat_history.append({"name": "assistant", "text": answer["action"]})
                 elif "next" in answer:
-                    st.session_state.current_node = get_next_node(answer["next"], [DECISION_TREE])
+                    next_node = get_next_node(answer["next"], [DECISION_TREE])
+                    st.session_state.chat_history.append({"name": "assistant", "text": next_node["question"]})
+                    if "comments" in next_node:
+                        st.session_state.chat_history.append({"name": "assistant", "text": next_node["comments"]})
+                    st.session_state.current_node = next_node
                     st.experimental_rerun()
 
     # Reset button on the bottom right, always visible
