@@ -38,7 +38,7 @@ def chat_with_tree():
     st.markdown("""
         <style>
             .stChat .stChatMessage p {
-                font-size: 18px;
+                font-size: 20px;
             }
             .stButton>button {
                 width: 100%;
@@ -60,6 +60,8 @@ def chat_with_tree():
     # Display the current question
     with st.chat_message(name="assistant"):
         st.write(current_node["question"])
+        if "comments" in current_node:
+            st.write(current_node["comments"])
 
     # Display the available answers as buttons
     selected_option = None
