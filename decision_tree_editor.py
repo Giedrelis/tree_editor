@@ -1,27 +1,17 @@
-
 import streamlit as st
-import streamlit.components.v1 as components
 
-# Load the custom component
-tree_editor = components.declare_component("tree_editor", url="http://localhost:3001")
+# Embed the D3.js visualization
+with open("d3.min.js", "r") as f:
+    d3_script = f.read()
 
-def main():
-    st.title("Graphical Tree Editor")
+with open("tree_editor.js", "r") as f:
+    tree_editor_script = f.read()
 
-    # Sample tree data (this will be dynamic in the final version)
-    tree_data = {
-        "name": "Root",
-        "children": [
-            {"name": "Child 1"},
-            {"name": "Child 2", "children": [{"name": "Grandchild"}]}
-        ]
-    }
-
-    # Render the tree editor component
-    updated_tree_data = tree_editor(tree_data=tree_data)
-
-    # Display the updated tree data (for debugging purposes)
-    st.json(updated_tree_data)
-
-if __name__ == "__main__":
-    main()
+st.components.v1.html(
+    f"""
+    <script>{d3_script}</script>
+    <div id="d3-container"></div>
+    <script>{tree_editor_script}</script>
+    """,
+    height=600
+)
